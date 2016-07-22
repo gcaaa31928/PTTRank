@@ -14,10 +14,13 @@ BOT_NAME = 'PTTRank'
 SPIDER_MODULES = ['PTTRank.spiders']
 NEWSPIDER_MODULE = 'PTTRank.spiders'
 
-# DOWNLOAD_DELAY = 1.25
+DOWNLOAD_DELAY = 1.25
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'PTTRank (+http://www.yourdomain.com)'
-
+DATABASE = {'drivername': 'postgresql',
+            'username': 'red',
+            'password': 'qwerasdf',
+            'database': 'ptt'}
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
@@ -64,9 +67,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'PTTRank.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'PTTRank.pipelines.PttrankPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
