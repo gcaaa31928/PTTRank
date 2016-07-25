@@ -2,3 +2,5 @@ scrapy
 SQLAlchemy
 psycopg2
 django
+django-celery
+redis
