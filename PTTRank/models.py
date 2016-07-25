@@ -24,3 +24,8 @@ class PTTArticle(DeclarativeBase):
     comments = Column('comments', JSON)
     url = Column('url', String(200), unique=True)
     score = Column('score', Integer)
+
+class Rank(DeclarativeBase):
+    __tableName__ = "rank"
+    id = Column(Integer, primary_key=True)
+    top_comments = Column("top_comments", JSON)
