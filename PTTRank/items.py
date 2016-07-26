@@ -13,7 +13,7 @@ class PttrankItem(scrapy.Item):
     author_id = scrapy.Field()
     nick_name = scrapy.Field()
     date = scrapy.Field()
-    content = scrapy.Field()
+    contents = scrapy.Field()
     comments = scrapy.Field()
     url = scrapy.Field()
     score = scrapy.Field()

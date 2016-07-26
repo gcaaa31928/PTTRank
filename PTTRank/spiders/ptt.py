@@ -55,7 +55,7 @@ class PttSpider(scrapy.Spider):
             .extract()
         item['date'] = datetime.strptime(datetime_str, '%a %b %d %H:%M:%S %Y')
 
-        item['content'] = response.css('#main-content::text')[0].extract()
+        item['contents'] = response.css('#main-content::text')[0].extract()
 
         comments = []
         total_score = 0

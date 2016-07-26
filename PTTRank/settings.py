@@ -14,7 +14,7 @@ BOT_NAME = 'PTTRank'
 SPIDER_MODULES = ['PTTRank.spiders']
 NEWSPIDER_MODULE = 'PTTRank.spiders'
 
-DOWNLOAD_DELAY = 1.25
+# DOWNLOAD_DELAY = 1.25
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'PTTRank (+http://www.yourdomain.com)'
 DATABASE = {'drivername': 'postgresql',
