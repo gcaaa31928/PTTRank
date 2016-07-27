@@ -12,3 +12,8 @@ class PTT(models.Model):
     comments = JSONField()
     url = models.CharField(max_length=300, blank=True, default='', unique=True)
     score = models.IntegerField()
+
+class Rank(models.Model):
+    top_comments = JSONField(null=True, default='')
+    high_quality_post = JSONField(default='')
+    low_quality_post = JSONField(default='')
