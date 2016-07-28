@@ -1,10 +1,12 @@
 import operator
-
+import jieba
 from PTTRankServerApp.models import *
 from PTTRankServerApp.serializers import PTTSerializer
 
 
 class PTTHelper:
+    jieba.set_dictionary('dict.txt.big')
+
     @classmethod
     def top_comments(cls, after_datetimes, limit=20):
 
@@ -69,3 +71,9 @@ class PTTHelper:
             low_freq[k] = v
         print(high_freq, low_freq)
         return high_freq, low_freq
+
+    @classmethod
+    def hot_topic(cls, after_datetimes, limit=20):
+        ptt = PTT.objects.filter(date__gt=after_datetimes)
+        ptt_json = PTTSerializer(ptt, many=True).data
+
