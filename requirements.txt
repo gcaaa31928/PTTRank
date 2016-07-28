@@ -6,3 +6,4 @@ django-celery
 redis
 djangorestframework
 jieba
+keras
