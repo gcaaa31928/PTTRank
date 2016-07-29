@@ -46,7 +46,7 @@ class Command(BaseCommand):
         labels = to_categorical(np.asarray(labels))
         print('Shape of data tensor:', data.shape)
         print('Shape of label tensor:', labels.shape)
-
+        print('Token word index:', tokenizer.word_index)
         indices = np.arange(data.shape[0])
         np.random.shuffle(indices)
         data = data[indices]
@@ -63,8 +63,8 @@ class Command(BaseCommand):
 
         # train a 1D convnet with global maxpooling
         sequence_input = Input(shape=(self.MAX_SEQUENCE_LENGTH,), dtype='int32')
-        print(sequence_input)
-        x = Conv1D(128, 5, activation='relu')(sequence_input)
+        x = Embedding(output_dim=100, input_dim=len(tokenizer.word_index), input_length=self.MAX_SEQUENCE_LENGTH)(sequence_input)
+        x = Conv1D(128, 5, activation='relu')(x)
         x = MaxPooling1D(5)(x)
         x = Conv1D(128, 5, activation='relu')(x)
         x = MaxPooling1D(5)(x)
@@ -79,5 +79,8 @@ class Command(BaseCommand):
                       metrics=['acc'])
 
         # happy learning!
-        # model.fit(x_train, y_train, validation_data=(x_val, y_val),
-        #           nb_epoch=2, batch_size=128)
+        model.fit(x_train, y_train, validation_data=(x_val, y_val),
+                  nb_epoch=2, batch_size=64)
+        score = model.evaluate(x_val, y_val, verbose=0)
+        print('Test score:', score[0])
+        print('Test accuracy:', score[1])
