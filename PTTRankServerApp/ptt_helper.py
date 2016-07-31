@@ -2,7 +2,7 @@ import operator
 import jieba
 from PTTRankServerApp.models import *
 from PTTRankServerApp.serializers import PTTSerializer
-
+import re
 
 class PTTHelper:
     jieba.set_dictionary('dict.txt.big')
@@ -73,7 +73,29 @@ class PTTHelper:
         return high_freq, low_freq
 
     @classmethod
-    def hot_topic(cls, after_datetimes, limit=20):
+    def hot_topic(cls, after_datetimes, reply_weight=10, limit=20):
         ptt = PTT.objects.filter(date__gt=after_datetimes)
         ptt_json = PTTSerializer(ptt, many=True).data
-
+        reply_freq = {}
+        all_comments_freq = {}
+        for article in ptt_json:
+            title = article['title']
+            comments = article['comments']
+            matches = re.search("Re: (.*)", title)
+            if matches is not None:
+                origin_title = matches.group(1)
+                reply_freq[origin_title] = reply_freq.get(origin_title, 0) + 1
+                all_comments_freq[origin_title] = all_comments_freq.get(origin_title, 0) + len(comments)
+            else:
+                reply_freq[title] = reply_freq.get(title, 1) + 1
+                all_comments_freq[title] = all_comments_freq.get(title, 0) + len(comments)
+        article_hot = {}
+        for key, value in reply_freq.items():
+            article_hot[key] = article_hot.get(key, 0) + value
+        for key, value in all_comments_freq.items():
+            article_hot[key] = article_hot.get(key, 0) + value * reply_weight
+        sorted_result = sorted(article_hot.items(), key=operator.itemgetter(1), reverse=True)
+        result = {}
+        for k, v in sorted_result[:limit]:
+            result[k] = v
+        return result
