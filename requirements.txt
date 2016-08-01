@@ -7,3 +7,4 @@ redis
 djangorestframework
 jieba
 keras
+scikit-learn
