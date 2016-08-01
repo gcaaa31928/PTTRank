@@ -77,6 +77,7 @@ class PTTHelper:
         ptt_json = PTTSerializer(ptt, many=True).data
         reply_freq = {}
         all_comments_freq = {}
+        article_info = {}
         for article in ptt_json:
             title = article['title']
             comments = article['comments']
@@ -87,9 +88,12 @@ class PTTHelper:
                 origin_title = matches.group(1)
                 reply_freq[origin_title] = reply_freq.get(origin_title, 0) + 1
                 all_comments_freq[origin_title] = all_comments_freq.get(origin_title, 0) + len(comments)
+                if origin_title not in article_info:
+                    article_info[origin_title] = article
             else:
                 reply_freq[title] = reply_freq.get(title, 1) + 1
                 all_comments_freq[title] = all_comments_freq.get(title, 0) + len(comments)
+                article_info[title] = article
         article_hot = {}
         for key, value in reply_freq.items():
             article_hot[key] = article_hot.get(key, 0) + value
@@ -99,7 +103,31 @@ class PTTHelper:
             article_hot[key] = article_hot.get(key, 0) + value * reply_weight
 
         sorted_result = sorted(article_hot.items(), key=operator.itemgetter(1), reverse=True)
-        result = {}
+        result = []
         for k, v in sorted_result[:limit]:
-            result[k] = v
+            if k not in article_info:
+                continue
+            info = article_info[k]
+            info['weight'] = v
+            result.append(info)
         return result
+
+    @classmethod
+    def conscience_comments(cls, after_datetimes, limit=20):
+        ptt = PTT.objects.filter(date__gt=after_datetimes)
+        ptt_json = PTTSerializer(ptt, many=True).data
+        commenter_score = dict()
+        for article in ptt_json:
+            comments = article['comments']
+            for comment in comments:
+                user = comment['user']
+                score = comment['score']
+                commenter_score[user] = commenter_score.get(user, 0) + score
+        descending_result = sorted(commenter_score.items(), key=operator.itemgetter(1), reverse=True)
+        kind = dict()
+        evil = dict()
+        for k, v in descending_result[:limit]:
+            kind[k] = v
+        for k, v in descending_result[-limit:]:
+            evil[k] = v
+        return kind, evil
