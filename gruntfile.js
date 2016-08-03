@@ -42,10 +42,17 @@ module.exports = function (grunt) {
             },
             dist: {
                 src: ['<%= tmp %>/**/*.js'],
-                dest: '<%= dist %>/combined.js',
-            },
+                dest: '<%= tmp %>/combined.js',
+            }
         },
+        browserify: {
+            dist: {
+                files: {
+                    '<%= dist %>/combined.js': ['<%= tmp %>/combined.js']
+                }
+            }
+        }
     });
 
-    grunt.registerTask('default', ['babel', 'concat']);
+    grunt.registerTask('default', ['babel', 'concat', 'browserify']);
 };
