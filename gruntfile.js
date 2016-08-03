@@ -6,12 +6,14 @@ module.exports = function (grunt) {
 
     var appConfig = {
         app: 'PTTRankServer/js/',
-        dist: 'PTTRankServer/assets'
+        dist: 'PTTRankServer/assets',
+        tmp: '.tmp/js'
     };
     grunt.initConfig({
         // Project settings
         app: appConfig.app,
         dist: appConfig.dist,
+        tmp: appConfig.tmp,
 
         babel: {
             options: {
@@ -21,7 +23,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '<%= dist %>/app.js': '<%= app %>/app.js'
+                    '<%= tmp %>/app.js': '<%= app %>/app.js'
                 }
             },
             jsx: {
@@ -29,12 +31,21 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: '<%= app %>', // Custom folder
                     src: ['**/*.jsx'],
-                    dest: '<%= dist %>', // Custom folder
+                    dest: '<%= tmp %>', // Custom folder
                     ext: '.js'
                 }]
             }
-        }
+        },
+        concat: {
+            options: {
+                stripBanners: true
+            },
+            dist: {
+                src: ['<%= tmp %>/**/*.js'],
+                dest: '<%= dist %>/combined.js',
+            },
+        },
     });
 
-    grunt.registerTask('default', ['babel']);
+    grunt.registerTask('default', ['babel', 'concat']);
 };
