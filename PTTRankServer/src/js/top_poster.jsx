@@ -1,15 +1,15 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var TopCommenters = React.createClass({
+var TopPosters = React.createClass({
     getInitialState: function () {
         return {data: [{id: 'gcaaa', score: 10},{id: 'gcaaa2', score: 20}]};
     },
     render: function () {
         return (
             <AbstractRankTable
-                title="最常留言者"
-                dataName="留言數"
+                title="最常發文者"
+                dataName="發文數"
                 data={this.state.data}
             />
         )
@@ -18,6 +18,6 @@ var TopCommenters = React.createClass({
 
 
 ReactDOM.render(
-    <TopCommenters />,
-    document.getElementById('top_commenters')
+    <TopPosters />,
+    document.getElementById('top_posters')
 );
