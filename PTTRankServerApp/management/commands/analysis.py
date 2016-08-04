@@ -15,5 +15,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # rank_object = Rank.objects.create()
-        print(PTTHelper.conscience_comments(datetime.datetime(2005, 1, 1)))
+        print(PTTHelper.hot_topic(datetime.datetime(2005, 1, 1)))
         # rank_object.save()

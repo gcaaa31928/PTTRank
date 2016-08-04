@@ -14,42 +14,19 @@
     </div>
 </div>
 <div class="ui grid page">
-    <div class="six wide column">
-        <table class="ui inverted table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Notes</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>John</td>
-                <td>Approved</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <td>Jamie</td>
-                <td>Approved</td>
-                <td>Requires call</td>
-            </tr>
-            <tr>
-                <td>Jill</td>
-                <td>Denied</td>
-                <td>None</td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr><th>3 People</th>
-                <th>2 Approved</th>
-                <th></th>
-            </tr></tfoot>
-        </table>
+    <div class="row">
+        <div class="six wide column">
+            <div id="top_commenters"></div>
+        </div>
+        <div class="ten wide column">
+            <div id="hottest_post"></div>
+        </div>
     </div>
-    <div class="four wide column"></div>
-    <div class="four wide column"></div>
-    <div class="four wide column"></div>
+    <div class="row">
+        <div class="five wide column" id="top_posters"></div>
+        <div class="five wide column" id="top_quality"></div>
+        <div class="five wide column" id="top_conscience"></div>
+    </div>
 </div>
 
 <script src="{% static "react/react.js" %}"></script>
