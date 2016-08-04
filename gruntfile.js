@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     var appConfig = {
-        app: 'PTTRankServer/js/',
+        app: 'PTTRankServer/src/',
         dist: 'PTTRankServer/assets',
         tmp: '.tmp/js'
     };
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    '<%= tmp %>/app.js': '<%= app %>/app.js'
+                    '<%= tmp %>/app.js': '<%= app %>/js/app.js'
                 }
             },
             jsx: {
@@ -40,19 +40,29 @@ module.exports = function (grunt) {
             options: {
                 stripBanners: true
             },
-            dist: {
+            js: {
                 src: ['<%= tmp %>/**/*.js'],
-                dest: '<%= tmp %>/combined.js',
+                dest: '<%= dist %>/combined.js',
+            },
+            css: {
+                src: ['<%= app %>/**/*.css'],
+                dest: '<%= dist %>/combined.css',
             }
         },
         browserify: {
             dist: {
                 files: {
-                    '<%= dist %>/combined.js': ['<%= tmp %>/combined.js']
+                    '<%= dist %>/combined.js': ['<%= dist %>/combined.js']
                 }
+            }
+        },
+        watch: {
+            scripts: {
+                files: ['<%= app %>/**/*.js', '<%= app %>/**/*.jsx', '<%= app %>/**/*.css'],
+                tasks: ['default']
             }
         }
     });
 
-    grunt.registerTask('default', ['babel', 'concat', 'browserify']);
+    grunt.registerTask('default', ['babel', 'concat', 'browserify', 'watch']);
 };

@@ -2,12 +2,59 @@
 
 <html>
 <head>
-
+    <link rel="stylesheet" type="text/css" href="{% static "semantic/dist/semantic.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "combined.css" %}">
 </head>
-<body ng-app="newsApp">
-<div id="example">
+<body>
+<div class="ui inverted segment">
+    <div class="ui inverted secondary pointing menu">
+        <div class="item">
+            PTT Rank
+        </div>
+    </div>
 </div>
+<div class="ui grid page">
+    <div class="six wide column">
+        <table class="ui inverted table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>John</td>
+                <td>Approved</td>
+                <td>None</td>
+            </tr>
+            <tr>
+                <td>Jamie</td>
+                <td>Approved</td>
+                <td>Requires call</td>
+            </tr>
+            <tr>
+                <td>Jill</td>
+                <td>Denied</td>
+                <td>None</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr><th>3 People</th>
+                <th>2 Approved</th>
+                <th></th>
+            </tr></tfoot>
+        </table>
+    </div>
+    <div class="four wide column"></div>
+    <div class="four wide column"></div>
+    <div class="four wide column"></div>
+</div>
+
 <script src="{% static "react/react.js" %}"></script>
 <script src="{% static "combined.js" %}"></script>
+<script src="{% static "jquery/dist/jquery.js" %}"></script>
+<script src="{% static "semantic/dist/semantic.js" %}"></script>
 </body>
 </html>
