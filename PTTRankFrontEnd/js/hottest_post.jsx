@@ -48,9 +48,4 @@ var HottestPost = React.createClass({
         )
     }
 });
-
-
-ReactDOM.render(
-    <HottestPost />,
-    document.getElementById('hottest_post')
-);
+export default HottestPost;

@@ -16,8 +16,10 @@ var TopPosters = React.createClass({
     }
 });
 
+export default TopPosters
 
-ReactDOM.render(
-    <TopPosters />,
-    document.getElementById('top_posters')
-);
+
+// ReactDOM.render(
+//     <TopPosters />,
+//     document.getElementById('top_posters')
+// );

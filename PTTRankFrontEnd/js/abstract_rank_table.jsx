@@ -36,3 +36,5 @@ var AbstractRankTable = React.createClass({
         )
     }
 });
+
+export default AbstractRankTable

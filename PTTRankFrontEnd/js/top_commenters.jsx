@@ -17,7 +17,7 @@ var TopCommenters = React.createClass({
 });
 
 
-ReactDOM.render(
-    <TopCommenters />,
-    document.getElementById('top_commenters')
-);
+// ReactDOM.render(
+    {/*<TopCommenters />,*/}
+    // document.getElementById('top_commenters')
+// );
