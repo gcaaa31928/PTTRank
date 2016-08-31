@@ -1,0 +1,22 @@
+{% load render_bundle from webpack_loader %}
+<html>
+<head>
+    {% render_bundle 'main' %}
+</head>
+<body>
+<div class="ui inverted segment">
+    <div class="ui inverted secondary pointing menu">
+        <div class="item">
+            PTT Rank
+        </div>
+    </div>
+</div>
+<div id="root"></div>
+
+{#<script src="{% static "react/react.js" %}"></script>#}
+{#<script src="{% static "combined.js" %}"></script>#}
+{#<script src="{% static "jquery/dist/jquery.js" %}"></script>#}
+{#<script src="{% static "semantic/dist/semantic.js" %}"></script>#}
+{#<script src="https://npmcdn.com/react-router/umd/ReactRouter.min.js"></script>#}
+</body>
+</html>

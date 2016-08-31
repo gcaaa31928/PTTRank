@@ -1,0 +1,20 @@
+{
+  "name": "PTTRankServer",
+  "homepage": "https://github.com/gcaaa31928/PTTRank",
+  "authors": [
+    "gcaaa31928 <gcaaa31928@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic": "semantic-ui#^2.2.2"
+  }
+}
