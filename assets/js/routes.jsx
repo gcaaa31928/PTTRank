@@ -1,9 +1,12 @@
-import ReactDOM from 'react-dom'
+import React from 'react'
+import {render} from 'react-dom'
 import {Router, Route, Link, browserHistory} from 'react-router'
-ReactDOM.render(
+import Index from './index'
+
+render(
     <Router history={browserHistory}>
-        {/*<Route path="/" component={Index}>*/}
-        {/*</Route>*/}
+         <Route path="/" component={Index}>
+         </Route>
     </Router>
     , document.getElementById('root')
 );

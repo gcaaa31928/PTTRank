@@ -9,9 +9,10 @@ var appConfig = {
     templateDist: '../../PTTRankServerApp/templates',
     tmp: '.tmp',
 };
+console.log(__dirname);
 module.exports = {
     context: __dirname,
-    entry: appConfig.src + '/js/index.jsx',
+    entry: appConfig.src + '/js/app.js',
     output: {
         path: appConfig.dist,
         filename: "[name]-[hash].js",

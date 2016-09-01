@@ -1,3 +1,4 @@
+import AbstractRankTable from './abstract_rank_table'
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -15,6 +16,8 @@ var TopCommenters = React.createClass({
         )
     }
 });
+
+export default TopCommenters
 
 
 // ReactDOM.render(

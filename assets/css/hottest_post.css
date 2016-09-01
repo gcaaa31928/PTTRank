@@ -1,3 +1,11 @@
 #hottest_post *{
     color: white;
 }
+
+.hottest,.item .content {
+    height: 60px;
+}
+
+.hottest,.item .body {
+    font-size: 19px;
+}
