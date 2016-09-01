@@ -38,10 +38,13 @@ var HottestPost = React.createClass({
                     {
                         this.state.data.map(function (article, i) {
                             return (
-                                <div className="hottest item" key={i}>
-                                    <div className="content">
+                                <div className="hottest item ui grid" key={i}>
+                                    <div className="content twelve wide column">
                                         <div className="header">{article.author_id}</div>
                                         <div className="body">{article.title}</div>
+                                    </div>
+                                    <div className="content four wide column">
+                                        <i className="calendar icon" />
                                     </div>
                                 </div>
                             )

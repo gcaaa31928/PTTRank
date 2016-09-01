@@ -3,9 +3,14 @@
 }
 
 .hottest,.item .content {
-    height: 60px;
+    /*height: 60px;*/
 }
 
 .hottest,.item .body {
-    font-size: 19px;
+    font-size: 18px;
+}
+
+.hottest .header {
+    margin-bottom: 8px !important;
+    color: #575757 !important;
 }
