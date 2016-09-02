@@ -2,7 +2,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 var path = require('path');
 var projectRoot = process.env.PWD; // Absolute path to the project root
 var BowerWebpackPlugin = require('bower-webpack-plugin');
-
+var webpack = require('webpack');
 var appConfig = {
     src: './assets',
     dist: path.resolve('./assets/bundles/'),
@@ -44,7 +44,14 @@ module.exports = {
     plugins: [
         new BundleTracker({filename: './webpack-stats.json'}),
         new BowerWebpackPlugin({
-            excludes: /.*\.less/
+            modulesDirectories: ["bower_components"],
+            manifestFiles:      "bower.json",
+            excludes: /.*\.less/,
+            searchResolveModulesDirectories: true
         }),
+        new webpack.ProvidePlugin({
+            $:      "jquery",
+            jQuery: "jquery"
+        })
     ]
 };

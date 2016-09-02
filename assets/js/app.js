@@ -1,3 +1,5 @@
 require('react');
-require('semantic/dist/semantic.min.css');
+require('jquery');
+require('bootstrap');
+require('bootstrap/dist/css/bootstrap.min.css');
 require('./routes');

@@ -1,5 +1,7 @@
 html, body {
-    background: #505050;
+    background: #F3F3F3;
 }
-.page {
+.header,.navbar {
+    background-color: #D7D7D7;
+    border-color: #A9A9A9;
 }
