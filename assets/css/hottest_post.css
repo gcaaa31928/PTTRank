@@ -1,16 +1,33 @@
-#hottest_post *{
-    color: white;
-}
 
-.hottest,.item .content {
-    /*height: 60px;*/
-}
-
-.hottest,.item .body {
+.callout .body {
     font-size: 18px;
 }
 
-.hottest .header {
-    margin-bottom: 8px !important;
-    color: #575757 !important;
+.callout .header {
+    margin-bottom: 8px;
+    color: #575757;
+}
+
+.callout {
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    border-left-color: #2C8C6D;
+    margin: 5px;
+}
+
+.callout.hottest {
+    border-left-color: #D37342;
+}
+
+.callout.hot {
+    border-left-color: #BD3B62;
+}
+
+.callout.normal {
+    border-left-color: #75BC3B;
+}
+
+.callout .date {
+    color: #767676;
 }

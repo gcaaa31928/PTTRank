@@ -6,35 +6,50 @@ var webpack = require('webpack');
 var appConfig = {
     src: './assets',
     dist: path.resolve('./assets/bundles/'),
+    static: '/static',
     templateDist: '../../PTTRankServerApp/templates',
     tmp: '.tmp',
 };
 console.log(__dirname);
 module.exports = {
     context: __dirname,
-    entry: appConfig.src + '/js/app.js',
+    entry: [
+        appConfig.src + '/js/app.js'
+    ],
     output: {
         path: appConfig.dist,
-        filename: "[name]-[hash].js",
+        filename: "[name].js",
     },
     resolve: {
         modulesDirectories: ['node_modules', 'bower_components'],
-        extensions: ['', '.js', '.jsx', '.css']
+        extensions: ['', '.js', '.jsx']
     },
     module: {
         loaders: [
             {
                 test: /\.js|jsx$/,
                 exclude: /node_modules/,
-                loaders: ['babel-loader']
+                loaders: ['react-hot', 'babel-loader']
             },
             {
                 test: /\.css$/,
                 loader: 'style!css!'
             },
             {
-                test: /\.(woff|svg|ttf|eot|png)([\?]?.*)$/,
-                loader: "file-loader?name=[name].[ext]"
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?limit=10000&mimetype=application/font-woff&name=" + appConfig.static + '/[name].[ext]'
+            }, {
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?limit=10000&mimetype=application/font-woff" + appConfig.static + '/[name].[ext]'
+            }, {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?limit=10000&mimetype=application/octet-stream" + appConfig.static + '/[name].[ext]'
+            }, {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file"
+            }, {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url?limit=10000&mimetype=image/svg+xml" + appConfig.static + '/[name].[ext]'
             }
         ],
         query: {
@@ -42,15 +57,16 @@ module.exports = {
         }
     },
     plugins: [
+        new webpack.NoErrorsPlugin(),
         new BundleTracker({filename: './webpack-stats.json'}),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
-            manifestFiles:      "bower.json",
+            manifestFiles: "bower.json",
             excludes: /.*\.less/,
-            searchResolveModulesDirectories: true
+            searchResolveModulesDirectories: false
         }),
         new webpack.ProvidePlugin({
-            $:      "jquery",
+            $: "jquery",
             jQuery: "jquery"
         })
     ]

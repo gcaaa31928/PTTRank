@@ -6,12 +6,12 @@ var React = require('react');
 var Index = React.createClass({
     render: function() {
         return (
-            <div className="ui grid page">
+            <div className="grid page">
                 <div className="row">
-                    <div className="ten wide column">
+                    <div className="col-sm-8">
                         <HottestPost />,
                     </div>
-                    <div className="six wide column">
+                    <div className="col-sm-4">
                         <TopCommenters />,
                     </div>
                 </div>
