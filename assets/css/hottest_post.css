@@ -10,7 +10,7 @@
 
 .callout {
     border: 1px solid #eee;
-    border-left-width: 5px;
+    border-left-width: 7px;
     border-radius: 3px;
     border-left-color: #2C8C6D;
     margin: 5px;
@@ -30,4 +30,13 @@
 
 .callout .date {
     color: #767676;
+}
+
+.callout .board {
+    color: #767676;
+    font-size: 24px;
+}
+
+.callout .icon {
+    padding: 5px;
 }

@@ -17,3 +17,4 @@ class PttrankItem(scrapy.Item):
     comments = scrapy.Field()
     url = scrapy.Field()
     score = scrapy.Field()
+    board = scrapy.Field()

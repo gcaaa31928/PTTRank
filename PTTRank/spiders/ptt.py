@@ -54,7 +54,7 @@ class PttSpider(scrapy.Spider):
             '//div[@class="article-metaline"]/span[text()="時間"]/following-sibling::span[1]/text()')[0]\
             .extract()
         item['date'] = datetime.strptime(datetime_str, '%a %b %d %H:%M:%S %Y')
-
+        item['board'] = response.css('#topbar .board::text')[0].extract()
         item['contents'] = response.css('#main-content::text')[0].extract()
 
         comments = []

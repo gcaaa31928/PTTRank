@@ -12,6 +12,9 @@ class PTT(models.Model):
     comments = JSONField()
     url = models.CharField(max_length=300, blank=True, default='', unique=True)
     score = models.IntegerField()
+    board = models.CharField(max_length=150, blank=True, default='')
+    class Meta:
+        ordering = ('-date', 'id')
 
 class Rank(models.Model):
     top_comments = JSONField(null=True, default='')

@@ -24,3 +24,4 @@ class PTTArticle(DeclarativeBase):
     comments = Column('comments', JSONB)
     url = Column('url', String(200), unique=True)
     score = Column('score', Integer)
+    board = Column('board', String(200))

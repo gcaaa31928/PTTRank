@@ -43,7 +43,7 @@ var HottestPost = React.createClass({
 
     componentDidMount: function () {
         this.timer = setInterval(function () {
-            this.polling();
+            // this.polling();
         }.bind(this), this.polling_interval)
     },
 
@@ -55,7 +55,6 @@ var HottestPost = React.createClass({
     },
 
     polling: function () {
-        console.log('sdfsdf');
         var data = this.state.data;
         this.index++;
         data.unshift(
@@ -97,6 +96,7 @@ var HottestPost = React.createClass({
                                     <div className="callout row" key={article.id}>
                                         <div className="left-side col-xs-8">
                                             <div className="header">
+                                                <i className="fa fa-user icon" aria-hidden="true"/>
                                                 {article.author_id}
                                                 <div className="pull-right date">
                                                     <i className="fa fa-clock-o" aria-hidden="true"/>
@@ -110,6 +110,8 @@ var HottestPost = React.createClass({
                                                 {article.board}
                                             </div>
                                             <div className="rank">
+                                                <i className="fa fa-star" aria-hidden="true"/>
+                                                <i className="fa fa-star" aria-hidden="true"/>
                                                 <i className="fa fa-star" aria-hidden="true"/>
                                             </div>
                                         </div>
