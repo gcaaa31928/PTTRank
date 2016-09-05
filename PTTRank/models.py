@@ -25,3 +25,4 @@ class PTTArticle(DeclarativeBase):
     url = Column('url', String(200), unique=True)
     score = Column('score', Integer)
     board = Column('board', String(200))
+    hot = Column('hot', Integer)

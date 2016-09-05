@@ -6,6 +6,7 @@ from PTTRankServerApp.models import *
 from PTTRankServerApp.serializers import PTTSerializer
 import re
 
+
 class PTTHelper:
     jieba.set_dictionary('dict.txt.big')
 
@@ -75,28 +76,12 @@ class PTTHelper:
 
     @classmethod
     def hot_topic(cls, start_datetime, end_datetime, limit=20, exposed_weight=10, threshold=30):
-        ptt = PTT.objects.filter(Q(date__range=(start_datetime, end_datetime)))
-        ptt_json = PTTSerializer(ptt, many=True).data
-        all_comments_freq = {}
-        article_info = {}
-        for article in ptt_json:
-            title = article['title']
-            comments = article['comments']
-            all_comments_freq[title] = all_comments_freq.get(title, 0) + len(comments)
-            article_info[title] = article
-        article_hot = {}
-        for key, value in all_comments_freq.items():
-            article_hot[key] = article_hot.get(key, 0) + value
-            if re.search('\[爆掛\]', key):
-                article_hot[key] = article_hot.get(key, 0) + exposed_weight
-
-        result = []
-        for key, value in article_hot.items():
-            if value >= threshold and key in article_info:
-                info = article_info[key]
-                info['weight'] = value
-                result.append(info)
-        return result
+        ptt = PTT.objects.filter(
+            Q(date__range=(start_datetime, end_datetime)),
+            Q(hot__gte=threshold),
+            ~Q(title__contains="公告")
+        )[:limit]
+        return ptt
 
     @classmethod
     def conscience_comments(cls, after_datetimes, limit=20):
@@ -117,4 +102,3 @@ class PTTHelper:
         for k, v in descending_result[-limit:]:
             evil[k] = v
         return kind, evil
-

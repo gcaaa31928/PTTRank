@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+import re
 import scrapy
 from scrapy.http import FormRequest
 
@@ -80,5 +81,14 @@ class PttSpider(scrapy.Spider):
         item['comments'] = comments
         item['score'] = total_score
         item['url'] = response.url
-
+        item['hot'] = self.count_hot_weight(item)
         yield item
+
+
+    def count_hot_weight(self, item, exposed_weight=10, threshold=30):
+        weight = 0
+        if re.search('\[爆掛\]', item['title']):
+            weight += exposed_weight
+        weight += len(item['comments'])
+        return weight
+

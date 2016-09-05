@@ -18,3 +18,4 @@ class PttrankItem(scrapy.Item):
     url = scrapy.Field()
     score = scrapy.Field()
     board = scrapy.Field()
+    hot = scrapy.Field()

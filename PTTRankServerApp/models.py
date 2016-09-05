@@ -13,6 +13,7 @@ class PTT(models.Model):
     url = models.CharField(max_length=300, blank=True, default='', unique=True)
     score = models.IntegerField()
     board = models.CharField(max_length=150, blank=True, default='')
+    hot = models.IntegerField()
     class Meta:
         ordering = ('-date', 'id')
 
