@@ -11,5 +11,5 @@ class PTTSerializer(serializers.ModelSerializer):
 class PTTBriefSerializer(serializers.ModelSerializer):
     class Meta:
         model = PTT
-        fields = ('id', 'title', 'author_id', 'nick_name', 'date', 'url', 'score', 'hot')
+        fields = ('id', 'title', 'author_id', 'nick_name', 'date', 'url', 'score', 'hot', 'board')
 

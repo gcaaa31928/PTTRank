@@ -1,13 +1,16 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
+var moment = require('moment');
 require('../css/hottest_post.css');
-
+moment.locale('zh-tw');
 var HottestPost = React.createClass({
     polling_interval: 3000,
     data_limit: 4,
-    index: 4,
+    index: 0,
+    current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
     getInitialState: function () {
+        console.log(this.current_timestamp);
         return {
             data: [
                 {
@@ -42,6 +45,7 @@ var HottestPost = React.createClass({
     },
 
     componentDidMount: function () {
+        this.polling();
         this.timer = setInterval(function () {
             // this.polling();
         }.bind(this), this.polling_interval)
@@ -54,24 +58,34 @@ var HottestPost = React.createClass({
         }
     },
 
+    articleHot: function(article) {
+        if (article.hot >= 100)
+            return 'hottest';
+        else if (article.hot >=60)
+            return 'hot';
+        else
+            return 'normal';
+    },
+
     polling: function () {
+        var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
         var data = this.state.data;
-        this.index++;
-        data.unshift(
-            {
-                title: '[新聞] 蔡總統向原住民道歉ss12',
-                author_id: 'gcaaa',
-                date: '不久前',
-                board: '八卦版',
-                weight: '燙',
-                url: 'https://www.ptt.cc/bbs/Gossiping/M.1470339394.A.1FC.html',
-                id: this.index.toString()
+        $.get(url, function(articles) {
+            for(var i = articles.length - 1; i >= 0 ;i--){
+                var article = articles[i];
+                article.id = this.index ++;
+                article.dateFromNow = moment(article.date).fromNow();
+                this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
+                this.state.data.unshift(article);
             }
-        );
-        while (data.length > this.data_limit) {
-            data.pop();
-        }
-        this.setState({data: data});
+            while (data.length > this.data_limit) {
+                data.pop();
+            }
+            this.setState({data: data});
+            setTimeout(function() {
+                this.polling();
+            }.bind(this), this.polling_interval);
+        }.bind(this));
     },
 
     render: function () {
@@ -92,15 +106,14 @@ var HottestPost = React.createClass({
                         {
                             this.state.data.map(function (article, i) {
                                 return (
-
-                                    <div className="callout row" key={article.id}>
+                                    <div className={"callout row " + this.articleHot(article)} key={article.id}>
                                         <div className="left-side col-xs-8">
                                             <div className="header">
                                                 <i className="fa fa-user icon" aria-hidden="true"/>
                                                 {article.author_id}
                                                 <div className="pull-right date">
-                                                    <i className="fa fa-clock-o" aria-hidden="true"/>
-                                                    {article.date}
+                                                    <i className="fa fa-clock-o icon" aria-hidden="true"/>
+                                                    {article.dateFromNow}
                                                 </div>
                                             </div>
                                             <div className="body">{article.title}</div>
@@ -117,7 +130,7 @@ var HottestPost = React.createClass({
                                         </div>
                                     </div>
                                 )
-                            })
+                            }.bind(this))
                         }
                     </ReactCSSTransitionGroup>
 

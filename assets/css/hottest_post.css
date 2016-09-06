@@ -16,11 +16,11 @@
     margin: 5px;
 }
 
-.callout.hottest {
+.callout.hot {
     border-left-color: #D37342;
 }
 
-.callout.hot {
+.callout.hottest {
     border-left-color: #BD3B62;
 }
 

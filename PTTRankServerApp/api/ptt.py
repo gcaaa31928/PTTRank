@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -14,7 +15,7 @@ def epoch_to_datetime(current_epoch):
 @api_view(['GET'])
 def hot_topic(request):
     start_date = epoch_to_datetime(request.GET.get('start_epoch', None))
-    end_date = epoch_to_datetime(request.GET.get('end_epoch', None))
+    end_date = epoch_to_datetime(request.GET.get('end_epoch', int(time.mktime(datetime.now().timetuple()))))
     articles = PTTHelper.hot_topic(start_date, end_date)
     ptt_json = PTTBriefSerializer(articles, many=True).data
     return JSONResponse(ptt_json, status=status.HTTP_200_OK)
