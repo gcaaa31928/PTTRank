@@ -1,6 +1,8 @@
 
 .callout .body {
     font-size: 18px;
+    color: black;
+    text-decoration: none;
 }
 
 .callout .header {
@@ -14,6 +16,7 @@
     border-radius: 3px;
     border-left-color: #2C8C6D;
     margin: 5px;
+    background-color: #F9F9F9;
 }
 
 .callout.hot {

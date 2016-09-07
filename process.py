@@ -14,5 +14,3 @@ runner.crawl(PttSpider)
 d = runner.join()
 d.addBoth(lambda _: reactor.stop())
 reactor.run()
-
-

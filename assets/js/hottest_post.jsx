@@ -100,7 +100,7 @@ var HottestPost = React.createClass({
                                                     {article.dateFromNow}
                                                 </div>
                                             </div>
-                                            <div className="body">{article.title}</div>
+                                            <a href={article.url} target="_blank"><div className="body">{article.title}</div></a>
                                         </div>
                                         <div className="right-side col-xs-4">
                                             <div className="board">

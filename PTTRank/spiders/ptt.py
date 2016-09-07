@@ -8,28 +8,39 @@ from scrapy.http import FormRequest
 from PTTRank.items import PttrankItem
 
 
+def boards_to_url(boards):
+    return map(lambda board: 'http://www.ptt.cc/bbs/' + board + '/index.html', boards)
+
+
 class PttSpider(scrapy.Spider):
     name = "ptt"
     allowed_domains = ["ptt.cc"]
-    start_urls = (
-        'http://www.ptt.cc/bbs/Gossiping/index.html',
-    )
 
-    max_pages = 20
+    boards = ['Gossiping', 'WomenTalk', 'LOL', 'PokemonGO', 'movie', 'Tech_Job', 'Boy-Girl',
+              'joke', 'Soft_job']
+
+    start_urls = tuple(boards_to_url(boards))
+
+    max_pages = 5
     current_page = 0
+    all_pages_url = []
 
     def over18_notice(self, response):
         return len(response.css('.over18-notice')) > 0
 
+
     def parse(self, response):
+
+
         if self.over18_notice(response):
             yield FormRequest.from_response(response,
                                             formdata={'yes': 'yes'},
                                             callback=self.parse)
         else:
-            for href in response.css('.r-ent > div.title > a::attr(href)'):
-                print(href.extract())
-                yield scrapy.Request(response.urljoin(href.extract()), callback=self.parse_article)
+            for href in reversed(response.css('.r-ent > div.title > a::attr(href)')):
+                # print(href.extract())
+                self.all_pages_url.append(response.urljoin(href.extract()))
+                # yield scrapy.Request(response.urljoin(href.extract()), callback=self.parse_article)
             previous_page = response.xpath(
                 "//a[contains(text(), '上頁')]/@href")
             if previous_page:
@@ -37,6 +48,9 @@ class PttSpider(scrapy.Spider):
                 if self.current_page <= self.max_pages:
                     url = response.urljoin(previous_page[0].extract())
                     yield scrapy.Request(url, callback=self.parse)
+            if self.current_page > self.max_pages:
+                for href in reversed(self.all_pages_url):
+                    yield scrapy.Request(href, callback=self.parse_article)
 
 
 

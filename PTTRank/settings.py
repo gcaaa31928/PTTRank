@@ -10,7 +10,7 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
 BOT_NAME = 'PTTRank'
-
+LOG_ENABLED = True
 SPIDER_MODULES = ['PTTRank.spiders']
 NEWSPIDER_MODULE = 'PTTRank.spiders'
 
