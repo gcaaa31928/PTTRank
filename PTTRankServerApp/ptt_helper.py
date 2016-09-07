@@ -11,7 +11,7 @@ class PTTHelper:
     jieba.set_dictionary('dict.txt.big')
 
     @classmethod
-    def top_comments(cls, after_datetimes, limit=20):
+    def top_comments(cls, after_datetimes, limit=10):
 
         ptt = PTT.objects.filter(date__gt=after_datetimes)
         ptt_json = PTTSerializer(ptt, many=True).data
@@ -26,9 +26,12 @@ class PTTHelper:
                     user_comments_times[user] = 1
 
         sorted_result = sorted(user_comments_times.items(), key=operator.itemgetter(1), reverse=True)
-        top_comments = dict()
+        top_comments = []
         for k, v in sorted_result[:limit]:
-            top_comments[k] = v
+            top_comments.append({
+                'id': k,
+                'score': v
+            })
         return top_comments
 
     @classmethod

@@ -15,7 +15,7 @@ class PttSpider(scrapy.Spider):
         'http://www.ptt.cc/bbs/Gossiping/index.html',
     )
 
-    max_pages = 1
+    max_pages = 20
     current_page = 0
 
     def over18_notice(self, response):

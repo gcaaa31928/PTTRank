@@ -6,56 +6,20 @@ require('../css/hottest_post.css');
 moment.locale('zh-tw');
 var HottestPost = React.createClass({
     polling_interval: 3000,
-    data_limit: 4,
+    data_limit: 10,
     index: 0,
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
     getInitialState: function () {
-        console.log(this.current_timestamp);
         return {
-            data: [
-                {
-                    title: '[新聞] 蔡總統向原住民道歉ss12',
-                    author_id: 'gcaaa',
-                    date: '不久前',
-                    board: '八卦版',
-                    weight: '燙',
-                    url: 'https://www.ptt.cc/bbs/Gossiping/M.1470339394.A.1FC.html',
-                    id: '1'
-                },
-                {
-                    title: '新聞] 蔡總統向原住民道歉 張震嶽批「越講越噁',
-                    author_id: 'gcaaa',
-                    date: '不久前',
-                    board: '八卦版',
-                    weight: '燙',
-                    url: 'https://www.ptt.cc/bbs/Gossiping/M.1470339394.A.1FC.html',
-                    id: '2'
-                },
-                {
-                    title: '新聞] 蔡總統向原住民道歉 張震嶽批「越講越噁',
-                    author_id: 'gcaaa',
-                    date: '不久前',
-                    board: '八卦版',
-                    weight: '燙',
-                    url: 'https://www.ptt.cc/bbs/Gossiping/M.1470339394.A.1FC.html',
-                    id: '3'
-                }
-            ]
+            data: []
         };
     },
 
     componentDidMount: function () {
         this.polling();
-        this.timer = setInterval(function () {
-            // this.polling();
-        }.bind(this), this.polling_interval)
     },
 
     componentWillUnmount: function () {
-        if (this.timer) {
-            clearInterval(this.timer);
-            this.timer = null;
-        }
     },
 
     articleHot: function (article) {
@@ -126,7 +90,7 @@ var HottestPost = React.createClass({
                                 }
 
                                 return (
-                                    <div className={"callout row " + this.articleHot(article)} key={article.id}>
+                                    <div className={"callout row " + this.articleHot(article)} key={article.url}>
                                         <div className="left-side col-xs-8">
                                             <div className="header">
                                                 <i className="fa fa-user icon" aria-hidden="true"/>

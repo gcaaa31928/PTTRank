@@ -24,7 +24,7 @@ var AbstractRankTable = React.createClass({
                 {
                     this.props.data.map(function (comment, i) {
                         return (
-                            <tr key={i}>
+                            <tr key={comment.id}>
                                 <td>{comment.id}</td>
                                 <td>{comment.score}</td>
                             </tr>
