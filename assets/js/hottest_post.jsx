@@ -58,22 +58,36 @@ var HottestPost = React.createClass({
         }
     },
 
-    articleHot: function(article) {
+    articleHot: function (article) {
         if (article.hot >= 100)
             return 'hottest';
-        else if (article.hot >=60)
+        else if (article.hot >= 60)
             return 'hot';
         else
             return 'normal';
     },
 
+    articleScore: function (article) {
+        if (article.score >= 100)
+            return 5;
+        else if (article.score >= 80)
+            return 4;
+        else if (article.score >= 60)
+            return 3;
+        else if (article.score >= 40)
+            return 2;
+        else if (article.score >= 20)
+            return 1;
+        return 0;
+    },
+
     polling: function () {
         var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
         var data = this.state.data;
-        $.get(url, function(articles) {
-            for(var i = articles.length - 1; i >= 0 ;i--){
+        $.get(url, function (articles) {
+            for (var i = articles.length - 1; i >= 0; i--) {
                 var article = articles[i];
-                article.id = this.index ++;
+                article.id = this.index++;
                 article.dateFromNow = moment(article.date).fromNow();
                 this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
                 this.state.data.unshift(article);
@@ -82,13 +96,14 @@ var HottestPost = React.createClass({
                 data.pop();
             }
             this.setState({data: data});
-            setTimeout(function() {
+            setTimeout(function () {
                 this.polling();
             }.bind(this), this.polling_interval);
         }.bind(this));
     },
 
     render: function () {
+
         return (
             <div>
                 <h3>熱門文章</h3>
@@ -102,9 +117,14 @@ var HottestPost = React.createClass({
                         }}
                         transitionEnterTimeout={1000}
                         transitionLeaveTimeout={1000}
-                        >
+                    >
                         {
                             this.state.data.map(function (article, i) {
+                                var scoresElement = [];
+                                for (var k = 0; k < this.articleScore(article); k++) {
+                                    scoresElement.push(<i className="fa fa-star" aria-hidden="true"/>)
+                                }
+
                                 return (
                                     <div className={"callout row " + this.articleHot(article)} key={article.id}>
                                         <div className="left-side col-xs-8">
@@ -123,15 +143,13 @@ var HottestPost = React.createClass({
                                                 {article.board}
                                             </div>
                                             <div className="rank">
-                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                <i className="fa fa-star" aria-hidden="true"/>
-                                                <i className="fa fa-star" aria-hidden="true"/>
+                                                {scoresElement}
                                             </div>
                                         </div>
                                     </div>
                                 )
-                            }.bind(this))
-                        }
+                                }.bind(this))
+                                }
                     </ReactCSSTransitionGroup>
 
                 </div>
