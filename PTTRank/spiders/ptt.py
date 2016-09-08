@@ -17,7 +17,7 @@ class PttSpider(scrapy.Spider):
     allowed_domains = ["ptt.cc"]
 
     boards = ['Gossiping', 'WomenTalk', 'LOL', 'PokemonGO', 'movie', 'Tech_Job', 'Boy-Girl',
-              'joke', 'Soft_job']
+              'joke', 'Soft_job', 'StupidClown', 'PC_Shopping']
 
     start_urls = tuple(boards_to_url(boards))
 
