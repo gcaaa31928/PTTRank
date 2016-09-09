@@ -78,12 +78,12 @@ class PTTHelper:
         return high_freq, low_freq
 
     @classmethod
-    def hot_topic(cls, start_datetime, end_datetime, limit=20, exposed_weight=10, threshold=30):
+    def hot_topic(cls, start_datetime, end_datetime, start=0, limit=20, exposed_weight=10, threshold=30):
         ptt = PTT.objects.filter(
             Q(date__range=(start_datetime, end_datetime)),
             Q(hot__gte=threshold),
             ~Q(title__contains="公告")
-        )[:limit]
+        )[start:start+limit]
         return ptt
 
     @classmethod
