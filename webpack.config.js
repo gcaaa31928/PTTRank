@@ -6,7 +6,7 @@ var webpack = require('webpack');
 var appConfig = {
     src: './assets',
     dist: path.resolve('./assets/bundles/'),
-    static: '/static',
+    static: '',
     templateDist: '../../PTTRankServerApp/templates',
     tmp: '.tmp',
 };
@@ -18,6 +18,7 @@ module.exports = {
     ],
     output: {
         path: appConfig.dist,
+        publicPath: '/static/',
         filename: "[name].js",
     },
     resolve: {
@@ -37,13 +38,13 @@ module.exports = {
             },
             {
                 test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff&name=" + appConfig.static + '/[name].[ext]'
+                loader: "url?limit=10000&mimetype=application/font-woff&name=" + appConfig.static + '[name].[ext]'
             }, {
                 test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/font-woff" + appConfig.static + '/[name].[ext]'
+                loader: "url?limit=10000&mimetype=application/font-woff&name=" + appConfig.static + '[name].[ext]'
             }, {
                 test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                loader: "url?limit=10000&mimetype=application/octet-stream" + appConfig.static + '/[name].[ext]'
+                loader: "url?limit=10000&mimetype=application/octet-stream&name=" + appConfig.static + '[name].[ext]'
             }, {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
                 loader: "file"
