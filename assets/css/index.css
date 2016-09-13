@@ -8,3 +8,11 @@ html, body {
 .page {
     padding: 20px;
 }
+
+.footer {
+    height: 20px;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+    background-color: #D7D7D7;
+}
