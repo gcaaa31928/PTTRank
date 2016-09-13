@@ -6,7 +6,7 @@ require('../css/hottest_post.css');
 moment.locale('zh-tw');
 var HottestPost = React.createClass({
     polling_interval: 3000,
-    data_limit: 10,
+    data_limit: 15,
     index: 0,
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
     getInitialState: function () {
@@ -117,27 +117,6 @@ var HottestPost = React.createClass({
                     </ReactCSSTransitionGroup>
 
                 </div>
-                <nav aria-label="Page navigation">
-                    <ul className="pagination">
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span className="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li className="page-item"><a className="page-link" href="#">1</a></li>
-                        <li className="page-item"><a className="page-link" href="#">2</a></li>
-                        <li className="page-item"><a className="page-link" href="#">3</a></li>
-                        <li className="page-item"><a className="page-link" href="#">4</a></li>
-                        <li className="page-item"><a className="page-link" href="#">5</a></li>
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span className="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         )
     }

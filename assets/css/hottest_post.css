@@ -1,5 +1,26 @@
 
 .hottest-post {
+    height: 600px;
+    overflow: auto;
+}
+
+.hottest-post::-webkit-scrollbar {
+    width: 7px;
+    height: 6px;
+}
+.hottest-post::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+}
+.hottest-post::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+}
+.hottest-post::-webkit-scrollbar-thumb:hover{
+    background: rgba(0,0,0,0.4);
+}
+.hottest-post::-webkit-scrollbar-thumb:active{
+    background: rgba(0,0,0,.9);
 }
 
 .callout .body {
