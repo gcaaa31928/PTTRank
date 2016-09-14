@@ -9,6 +9,7 @@ var HottestPost = React.createClass({
     data_limit: 15,
     index: 0,
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
+    polling_request: null,
     getInitialState: function () {
         return {
             data: []
@@ -16,6 +17,18 @@ var HottestPost = React.createClass({
     },
 
     componentDidMount: function () {
+        function isScrollBottom() {
+            var hottest_post_ele = $(".hottest-post");
+            var elementHeight = hottest_post_ele[0].scrollHeight;
+            var scrollPosition = hottest_post_ele.height() + hottest_post_ele.scrollTop();
+            return (elementHeight == scrollPosition);
+        }
+
+        $(".hottest-post").scroll(function () {
+            if (isScrollBottom()) {
+                this.polling_request.abort();
+            }
+        }.bind(this));
         this.polling();
     },
 
@@ -48,7 +61,7 @@ var HottestPost = React.createClass({
     polling: function () {
         var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
         var data = this.state.data;
-        $.get(url, function (articles) {
+        this.polling_request = $.get(url, function (articles) {
             for (var i = articles.length - 1; i >= 0; i--) {
                 var article = articles[i];
                 article.id = this.index++;

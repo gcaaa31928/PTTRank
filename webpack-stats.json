@@ -1,1 +1,1 @@
-{"status":"error","error":"ModuleNotFoundError","message":"Module not found: Error: Cannot resolve 'file' or 'directory' ./dist/jquery.js in G:\\Projects\\PTTRank\\bower_components\\jquery"}
+{"status":"done","chunks":{"main":[{"name":"main.js","publicPath":"/static/main.js","path":"F:\\Projects\\PTTRank\\assets\\bundles\\main.js"}]},"publicPath":"/static/"}
