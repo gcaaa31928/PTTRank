@@ -20,8 +20,7 @@ NEWSPIDER_MODULE = 'PTTRank.spiders'
 DATABASE = {'drivername': 'postgresql',
             'username': 'red',
             'password': 'qwerasdf',
-            'database': 'ptt',
-            'charset': 'utf8'}
+            'database': 'ptt'}
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 

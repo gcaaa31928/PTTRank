@@ -5,6 +5,4 @@ django
 redis
 djangorestframework
 jieba
-keras
-scikit-learn
 django-webpack-loader
