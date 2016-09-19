@@ -1,6 +1,8 @@
 html, body {
     background: #F3F3F3;
 }
+
+
 .header,.navbar {
     background-color: #D7D7D7;
     border-color: #A9A9A9;
@@ -21,4 +23,9 @@ html, body {
     line-height: 21px;
     margin-right: 20px;
     font-size: 21px;
+    color: #777;
+}
+
+.footer a {
+    color: #777;
 }
