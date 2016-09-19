@@ -23,7 +23,6 @@ var HottestPost = React.createClass({
             var scrollPosition = hottest_post_ele.height() + hottest_post_ele.scrollTop();
             return (elementHeight == scrollPosition);
         }
-
         $(".hottest-post").scroll(function () {
             if (isScrollBottom()) {
                 this.polling_request.abort();

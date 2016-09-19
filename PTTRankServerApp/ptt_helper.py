@@ -1,5 +1,4 @@
 import operator
-import jieba
 from django.db.models import Q
 
 from PTTRankServerApp.models import *
@@ -8,7 +7,6 @@ import re
 
 
 class PTTHelper:
-    jieba.set_dictionary('dict.txt.big')
 
     @classmethod
     def top_comments(cls, after_datetimes, limit=10):
