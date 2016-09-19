@@ -8,8 +8,12 @@ var HottestPost = React.createClass({
     polling_interval: 3000,
     data_limit: 15,
     index: 0,
+    start_page: 0,
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
+    olders_timestamp:  Math.round(moment().subtract(1, 'day').valueOf() / 1000),
     polling_request: null,
+    older_article_request: null,
+    keep_polling: true,
     getInitialState: function () {
         return {
             data: []
@@ -23,9 +27,24 @@ var HottestPost = React.createClass({
             var scrollPosition = hottest_post_ele.height() + hottest_post_ele.scrollTop();
             return (elementHeight == scrollPosition);
         }
+
+        function isScrollTop() {
+            var hottest_post_ele = $(".hottest-post");
+            var scrollPosition = hottest_post_ele.scrollTop();
+            return (0 == scrollPosition);
+        }
+
         $(".hottest-post").scroll(function () {
             if (isScrollBottom()) {
+                this.keep_polling = false;
                 this.polling_request.abort();
+                if (!this.older_article_request) {
+                    this.olderArticles();
+                }
+            } else if (isScrollTop()) {
+                this.keep_polling = true;
+                this.polling_request.abort();
+                this.polling();
             }
         }.bind(this));
         this.polling();
@@ -57,23 +76,48 @@ var HottestPost = React.createClass({
         return 0;
     },
 
+    handleOlderArticles: function(articles, state_data) {
+        for (var i = 0; i < articles.length; i++) {
+            var article = articles[i];
+            article.dateFromNow = moment(article.date).fromNow();
+            state_data.push(article);
+        }
+    },
+
+    handleArticles: function (articles, state_data) {
+        for (var i = articles.length - 1; i >= 0; i--) {
+            var article = articles[i];
+            article.dateFromNow = moment(article.date).fromNow();
+            this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
+            state_data.unshift(article);
+            while (state_data.length > this.data_limit) {
+                state_data.pop();
+            }
+        }
+        return state_data;
+    },
+
+    olderArticles: function () {
+        this.start_page ++;
+        var url = '/api/hot_topic?start_epoch=' + this.olders_timestamp +
+            '&start_page=' + this.start_page;
+        var data = this.state.data;
+        this.older_article_request = $.get(url, function (articles) {
+            this.handleOlderArticles(articles, data);
+            this.setState({data: data});
+            this.older_article_request = null;
+        }.bind(this));
+    },
+
     polling: function () {
         var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
         var data = this.state.data;
         this.polling_request = $.get(url, function (articles) {
-            for (var i = articles.length - 1; i >= 0; i--) {
-                var article = articles[i];
-                article.id = this.index++;
-                article.dateFromNow = moment(article.date).fromNow();
-                this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
-                this.state.data.unshift(article);
-            }
-            while (data.length > this.data_limit) {
-                data.pop();
-            }
+            this.handleArticles(articles, data);
             this.setState({data: data});
             setTimeout(function () {
-                this.polling();
+                if(this.keep_polling)
+                    this.polling();
             }.bind(this), this.polling_interval);
         }.bind(this));
     },
@@ -112,7 +156,9 @@ var HottestPost = React.createClass({
                                                     {article.dateFromNow}
                                                 </div>
                                             </div>
-                                            <a href={article.url} target="_blank"><div className="body">{article.title}</div></a>
+                                            <a href={article.url} target="_blank">
+                                                <div className="body">{article.title}</div>
+                                            </a>
                                         </div>
                                         <div className="right-side col-xs-4">
                                             <div className="board">
@@ -124,8 +170,8 @@ var HottestPost = React.createClass({
                                         </div>
                                     </div>
                                 )
-                                }.bind(this))
-                                }
+                            }.bind(this))
+                        }
                     </ReactCSSTransitionGroup>
 
                 </div>

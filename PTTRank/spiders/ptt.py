@@ -21,7 +21,7 @@ class PttSpider(scrapy.Spider):
 
     start_urls = tuple(boards_to_url(boards))
 
-    max_pages = 5
+    max_pages = 20
     current_page = 0
     all_pages_url = []
 
