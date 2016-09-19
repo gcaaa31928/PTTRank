@@ -8,4 +8,4 @@ while True:
     # os.system('python process.py')
     p = subprocess.Popen([sys.executable, 'process.py'])
     p.wait()
-    sleep(3)
+    sleep(20)
