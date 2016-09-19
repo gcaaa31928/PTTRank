@@ -15,8 +15,16 @@ class PttrankPipeline(object):
 
     def process_item(self, item, spider):
         session = self.Session()
-        ptt_article = PTTArticle(**item)
-        session.add(ptt_article)
-        session.commit()
-        return item
+        ptt_article = session.query(PTTArticle).filter(PTTArticle.url == item['url']).first()
+        if ptt_article:
+            # print(item)
+            session.query(PTTArticle).filter(PTTArticle.url == item['url']).update(item)
+            session.commit()
+            return item
+        else:
+            session = self.Session()
+            ptt_article = PTTArticle(**item)
+            session.add(ptt_article)
+            session.commit()
+            return item
 
