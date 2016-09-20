@@ -18,7 +18,7 @@ def hot_topic(request):
     end_date = epoch_to_datetime(request.GET.get('end_epoch', int(time.mktime(datetime.now().timetuple()))))
     limit = int(request.GET.get('limit', 20))
     start_page = int(request.GET.get('start_page', 0))
-    articles = PTTHelper.hot_topic(start_date, end_date, start_page * limit, limit)
+    articles = PTTHelper.hot_topic(start_date, end_date, start_page * limit, limit, threshold=10)
     ptt_json = PTTBriefSerializer(articles, many=True).data
     return JSONResponse(ptt_json, status=status.HTTP_200_OK)
 

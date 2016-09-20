@@ -2,10 +2,11 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var ReactCSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var moment = require('moment');
+require('moment/locale/zh-tw.js');
 require('../css/hottest_post.css');
 moment.locale('zh-tw');
 var HottestPost = React.createClass({
-    polling_interval: 15000,
+    polling_interval: 3000,
     data_limit: 15,
     index: 0,
     start_page: 0,
@@ -85,10 +86,11 @@ var HottestPost = React.createClass({
     },
 
     handleArticles: function (articles, state_data) {
+        state_data = [];
         for (var i = articles.length - 1; i >= 0; i--) {
             var article = articles[i];
             article.dateFromNow = moment(article.date).fromNow();
-            this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
+            // this.current_timestamp = Math.round(moment(article.date).valueOf() / 1000) + 1;
             state_data.unshift(article);
             while (state_data.length > this.data_limit) {
                 state_data.pop();
@@ -113,7 +115,7 @@ var HottestPost = React.createClass({
         var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
         var data = this.state.data;
         this.polling_request = $.get(url, function (articles) {
-            this.handleArticles(articles, data);
+            data = this.handleArticles(articles, data);
             this.setState({data: data});
             setTimeout(function () {
                 if(this.keep_polling)

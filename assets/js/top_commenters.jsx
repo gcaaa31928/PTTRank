@@ -9,7 +9,7 @@ var TopCommenters = React.createClass({
 
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
     getInitialState: function () {
-        return {data: [{id: 'gcaaa', score: 10},{id: 'gcaaa2', score: 20}]};
+        return {data: []};
     },
 
     componentDidMount: function() {
