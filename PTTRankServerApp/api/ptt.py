@@ -1,8 +1,6 @@
 from datetime import datetime
 
-from dateutil.tz import tzlocal
 from django.utils.timezone import activate
-from pytz import timezone
 import time
 
 from rest_framework import status
