@@ -2,11 +2,13 @@
 from datetime import datetime
 
 import re
+
+import pytz
 import scrapy
 from scrapy.http import FormRequest
 
 from PTTRank.items import PttrankItem
-
+from pytz import timezone
 
 def boards_to_url(boards):
     return map(lambda board: 'http://www.ptt.cc/bbs/' + board + '/index.html', boards)
@@ -68,7 +70,11 @@ class PttSpider(scrapy.Spider):
         datetime_str = response.xpath(
             '//div[@class="article-metaline"]/span[text()="時間"]/following-sibling::span[1]/text()')[0]\
             .extract()
-        item['date'] = datetime.strptime(datetime_str, '%a %b %d %H:%M:%S %Y')
+        local = pytz.timezone("Asia/Taipei")
+        date = datetime.strptime(datetime_str, '%a %b %d %H:%M:%S %Y')
+        local_dt = local.localize(date, is_dst=None)
+        utc_dt = local_dt.astimezone(pytz.utc)
+        item['date'] = utc_dt
         item['board'] = response.css('#topbar .board::text')[0].extract()
         item['contents'] = response.css('#main-content::text')[0].extract()
 
