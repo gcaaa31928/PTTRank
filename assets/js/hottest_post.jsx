@@ -6,7 +6,7 @@ require('moment/locale/zh-tw.js');
 require('../css/hottest_post.css');
 moment.locale('zh-tw');
 var HottestPost = React.createClass({
-    polling_interval: 3000,
+    polling_interval: 8000,
     data_limit: 15,
     index: 0,
     start_page: 0,
