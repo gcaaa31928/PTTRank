@@ -34,3 +34,11 @@ def top_commenters(request):
     commenters = PTTHelper.top_comments(start_date)
     return JSONResponse(commenters, status=status.HTTP_200_OK)
 
+
+@api_view(['GET'])
+def post(request, id):
+    if PTT.objects.filter(pk=id).exists():
+        article = PTT.objects.get(pk=id)
+        article_json = PTTSerializer(article).data
+        return JSONResponse(article_json, status=status.HTTP_200_OK)
+    return JSONResponse({}, status=status.HTTP_404_NOT_FOUND)
