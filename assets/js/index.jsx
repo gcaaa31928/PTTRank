@@ -4,7 +4,7 @@ require('../css/index.css');
 
 var React = require('react');
 var Index = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <div className="grid page">
                 <div className="row">

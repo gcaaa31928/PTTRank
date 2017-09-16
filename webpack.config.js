@@ -2,6 +2,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 var path = require('path');
 var projectRoot = process.env.PWD; // Absolute path to the project root
 var BowerWebpackPlugin = require('bower-webpack-plugin');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var webpack = require('webpack');
 var appConfig = {
     src: './assets',
@@ -59,6 +60,7 @@ module.exports = {
     },
     plugins: [
         new webpack.NoErrorsPlugin(),
+        new ProgressBarPlugin(),
         new BundleTracker({filename: './webpack-stats.json'}),
         new BowerWebpackPlugin({
             modulesDirectories: ["bower_components"],
