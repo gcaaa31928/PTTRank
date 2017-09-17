@@ -52,6 +52,7 @@ var HottestPost = React.createClass({
     },
 
     componentWillUnmount: function () {
+        this.keep_polling = false;
     },
 
     articleHot: function (article) {

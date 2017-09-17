@@ -20,6 +20,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^api/', include('PTTRankServerApp.urls')),
-    url(r'^main/.*', TemplateView.as_view(template_name='index.html')),
-    url(r'^$', RedirectView.as_view(url='/main'))
+    url(r'^app/.*', TemplateView.as_view(template_name='index.html')),
+    url(r'^$', RedirectView.as_view(url='/app'))
 ]
