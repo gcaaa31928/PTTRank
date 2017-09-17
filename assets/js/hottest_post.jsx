@@ -11,7 +11,9 @@ var HottestPost = React.createClass({
     index: 0,
     start_page: 0,
     current_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
-    olders_timestamp:  Math.round(moment().subtract(1, 'day').valueOf() / 1000),
+    current_post_id: 0,
+    olders_timestamp: Math.round(moment().subtract(1, 'day').valueOf() / 1000),
+    olders_post_id: 0,
     polling_request: null,
     older_article_request: null,
     keep_polling: true,
@@ -78,7 +80,7 @@ var HottestPost = React.createClass({
         return 0;
     },
 
-    handleOlderArticles: function(articles, state_data) {
+    handleOlderArticles: function (articles, state_data) {
         for (var i = 0; i < articles.length; i++) {
             var article = articles[i];
             article.dateFromNow = moment(article.date).fromNow();
@@ -101,9 +103,8 @@ var HottestPost = React.createClass({
     },
 
     olderArticles: function () {
-        this.start_page ++;
-        var url = '/api/hot_topic?start_epoch=' + this.olders_timestamp +
-            '&start_page=' + this.start_page;
+        this.start_page++;
+        var url = `/api/hot_topic?start_epoch=${this.olders_timestamp}&start_page=${this.start_page}&start_id=${this.olders_post_id}`;
         var data = this.state.data;
         this.older_article_request = $.get(url, function (articles) {
             this.handleOlderArticles(articles, data);
@@ -113,13 +114,13 @@ var HottestPost = React.createClass({
     },
 
     polling: function () {
-        var url = '/api/hot_topic?start_epoch=' + this.current_timestamp;
+        var url = `/api/hot_topic?start_epoch=${this.current_timestamp}`;
         var data = this.state.data;
         this.polling_request = $.get(url, function (articles) {
             data = this.handleArticles(articles, data);
             this.setState({data: data});
             setTimeout(function () {
-                if(this.keep_polling)
+                if (this.keep_polling)
                     this.polling();
             }.bind(this), this.polling_interval);
         }.bind(this));
@@ -145,7 +146,7 @@ var HottestPost = React.createClass({
                             this.state.data.map(function (article, i) {
                                 var scoresElement = [];
                                 for (var k = 0; k < this.articleScore(article); k++) {
-                                    scoresElement.push(<i className="fa fa-star" aria-hidden="true"/>)
+                                    scoresElement.push(<i key={k} className="fa fa-star" aria-hidden="true"/>)
                                 }
 
                                 return (
